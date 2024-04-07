@@ -1,19 +1,34 @@
 import React from "react";
-import socketIO from "socket.io-client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from "./components/Main";
-import Home from "./components/Home";
-const socket = socketIO.connect("http://localhost:4000");
+import "./styles.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Login } from "./components/Login";
+import { Books } from "./components/Books";
+import { Users } from "./components/Users";
+import { AddBook } from "./components/AddBook";
+import { MyFavorite } from "./components/MyFavorite";
 
-const App = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path='/' element={<Home />} />
-				<Route path='/app' element={<Main socket={socket} />} />
-			</Routes>
-		</BrowserRouter>
-	);
-};
-
-export default App;
+export default function App() {
+  return (
+    <div className="App">
+      <Router>
+        <Switch>
+          <Route exact path="/books">
+            <Books />
+          </Route>
+          <Route exact path="/users">
+            <Users />
+          </Route>
+          <Route exact path="/favorite">
+            <MyFavorite />
+          </Route>
+          <Route exact path="/book">
+            <AddBook />
+          </Route>
+          <Route path="/">
+            <Login />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
+}
