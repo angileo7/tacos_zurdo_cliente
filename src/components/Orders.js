@@ -20,7 +20,7 @@ export default class Orders extends Component {
       page: 1,
       limit: 1,
       count: 0,
-      rowsPerpage: 10,
+      rowsPerpage: 60,
       sortOrder: {},
       isLoading: false,
       data: [],
