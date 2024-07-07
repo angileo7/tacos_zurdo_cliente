@@ -4,10 +4,10 @@ import "../styles.css";
 import { AppHeader } from "./AppHeader";
 import { constructHeader, updateAppSettings } from "../util";
 import { useHistory } from "react-router-dom";
-const url = "http://localhost:5000/books";
+const url = process.env.REACT_APP_API_URL;
 
-export const Books = () => {
-  const [books, setBooks] = useState([]);
+export const Orders = () => {
+  const [orders, setOrders] = useState([]);
   const history = useHistory();
 
   const redirect = () => {
@@ -16,15 +16,14 @@ export const Books = () => {
   };
 
   useEffect(() => {
-    fetch(url, { headers: constructHeader() })
+    fetch(url+'/orders', { headers: constructHeader() })
       .then((res) => (res.status === 401 ? redirect() : res.json()))
       .then((json) => {
         if (json) {
-          updateAppSettings(json.token);
-          setBooks([...json.books]);
+          setOrders([...json.data]);
         }
       })
-      .catch((err) => console.log("Error fetching books ", err.message));
+      .catch((err) => console.log("Error fetching orders ", err.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,22 +33,21 @@ export const Books = () => {
       <Grid container justify="center" alignItems="center" direction="column">
         <Grid item style={{ marginBottom: "5vh" }}>
           <Typography variant="h3" gutterBottom>
-            Curated Books!
-            <span role="img" aria-label="books">
+            Orders!
+            <span role="img" aria-label="orders">
               📚
             </span>
           </Typography>
         </Grid>
         <Grid item container justify="center">
-          {books.map((book, key) => {
+          {orders.map((order, key) => {
+            console.log(order)
             return (
-              <Book
+              <Order
                 key={key}
-                name={book.name}
-                id={book.id}
-                author={book.author}
-                color={book.color}
-                onClick={() => console.log("My Favorite")}
+                item={order}
+                title={order.title}
+                //onClick={() => console.log("My Favorite")}
               />
             );
           })}
@@ -59,21 +57,31 @@ export const Books = () => {
   );
 };
 
-const Book = ({ name, id, author, onClick }) => {
+const Order = ({item}) => {
+  const { description, products, status, owner, total, title } = item;
   return (
     <Paper elevation={2} className="Book">
-      <Grid container direction="column">
+      <Grid container direction="row">
         <Grid item xs={12}>
-          <Typography variant="h6">{name}</Typography>
+          <Typography variant="h6">{description}</Typography>
         </Grid>
         <Typography variant="subtitle1" gutterBottom>
-          {author}
+          {owner}
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom>
+          {title}
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom>
+          {status}
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom>
+          {total}
         </Typography>
         <Button
           variant="contained"
           color="primary"
           size="small"
-          onClick={() => onClick(id)}
+          //onClick={() => onClick(id)}
         >
           ADD TO FAVORITES
         </Button>

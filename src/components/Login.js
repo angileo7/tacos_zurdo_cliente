@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Grid, Typography, TextField, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { updateAppSettings } from "../util";
-let base64 = require("base-64");
-let headers = new Headers();
-const url = "http://localhost:5000/login";
+const url = process.env.REACT_APP_API_URL;
 
 export const Login = () => {
   const [userName, setUserName] = useState("");
@@ -16,17 +14,26 @@ export const Login = () => {
   const onChangePassword = (password) => setPassword(password);
 
   const onClickLogin = () => {
-    headers.set(
-      "Authorization",
-      "Basic " + base64.encode(userName + ":" + password)
-    );
-    fetch(url, { headers: headers, method: "POST" })
+debugger
+    fetch(url+'/session/login', { 
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: userName,
+        password: password
+      })
+    })
       .then((res) => res.json())
       .then((json) => {
+        debugger
         if (json.message) setLoginError(json.message);
         else {
+          debugger
           updateAppSettings(json.token);
-          history.push("/books");
+          history.push("/orders");
         }
       })
       .catch((err) => console.log("Error logging into app ", err.message));
@@ -41,9 +48,9 @@ export const Login = () => {
     >
       <Grid item style={{ marginBottom: "10vh" }}>
         <Typography variant={"h3"}>
-          Welcome to Bookie!
+          Welcome to Tacos Zurdo!
           <span role={"img"} aria-label={"books"}>
-            📚
+          🌮
           </span>
         </Typography>
       </Grid>

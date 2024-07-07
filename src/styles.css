@@ -29,3 +29,37 @@
   min-height: 20vh;
   padding: 7em;
 }
+
+.home {
+  display: inline-grid;
+  width: 100%;
+}
+.btnContainer {
+  margin: 0.35em;
+  display: flex;
+  justify-self: flex-end;
+}
+
+.operating {
+  background-color: green;
+  color: white;
+  padding: 0.3em 0.5em;
+  margin: 0.5em;
+  display: flex;
+  text-decoration: none;
+  border-radius: 2em;
+  font-weight: bolder;
+  justify-content: center;
+}
+
+.maintenance {
+  background-color: orange;
+  color: white;
+  padding: 0.3em 0.5em;
+  margin: 0.5em;
+  display: flex;
+  text-decoration: none;
+  border-radius: 2em;
+  font-weight: bolder;
+  justify-content: center;
+}

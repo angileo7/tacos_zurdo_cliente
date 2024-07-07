@@ -4,7 +4,7 @@ import "../styles.css";
 import { AppHeader } from "./AppHeader";
 import { useHistory } from "react-router-dom";
 import { constructHeader, updateAppSettings } from "../util";
-const url = "http://localhost:5000/favorite";
+const url = process.env.REACT_APP_API_URL;
 
 export const MyFavorite = () => {
   const [favBooks, setFavBooks] = useState([]);

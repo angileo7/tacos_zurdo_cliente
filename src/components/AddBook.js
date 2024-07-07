@@ -11,7 +11,7 @@ import { AppHeader } from "./AppHeader";
 import { useHistory } from "react-router-dom";
 import { constructHeader, isMember, updateAppSettings } from "../util";
 
-const url = "http://localhost:5000/book";
+const url = process.env.REACT_APP_API_URL;
 
 export const AddBook = () => {
   const [book, setBookName] = useState("");

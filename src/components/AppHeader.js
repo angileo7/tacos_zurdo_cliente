@@ -12,7 +12,7 @@ import {
 import { useHistory } from "react-router-dom";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { constructHeader, isMember } from "../util";
-const url = "http://localhost:5000/logout";
+const url = process.env.REACT_APP_API_URL;
 
 export const AppHeader = ({ tabValue }) => {
   const tabs = ["/books", "/favorite", "/book", "/users"];
@@ -20,7 +20,7 @@ export const AppHeader = ({ tabValue }) => {
   const open = Boolean(anchorEl);
   const history = useHistory();
   const shouldDisable = isMember();
-
+console.log(shouldDisable)
   const handleClick = (event, newValue) => history.push(tabs[newValue]);
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
@@ -41,10 +41,9 @@ export const AppHeader = ({ tabValue }) => {
       <AppBar position="fixed">
         <Toolbar>
           <Tabs value={tabValue} onChange={handleClick}>
-            <Tab label="Books" />
-            <Tab label="Favorite" />
-            <Tab label="Add Book" disabled={shouldDisable} />
-            <Tab label="Users" disabled={shouldDisable} />
+            <Tab label="Orders" />
+            <Tab label="Add Order" disabled={!shouldDisable.includes('ADD_ORDER')} />
+            <Tab label="Show Statistics" disabled={!shouldDisable.includes('SHOW_STATISTICS')} />
           </Tabs>
           <div style={{ flexGrow: 1 }} />
           <IconButton
