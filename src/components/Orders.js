@@ -4,7 +4,7 @@ import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import { CircularProgress, Typography } from "@material-ui/core";
 import { confirmAlert } from "react-confirm-alert";
-import { constructHeader, isMember, updateAppSettings } from "../util";
+import { constructHeader } from "../util";
 
 const url = process.env.REACT_APP_API_URL;
 
